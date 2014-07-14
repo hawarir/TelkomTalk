@@ -95,6 +95,14 @@ public class Client implements Runnable {
                         System.out.println("Login Failed");
                     }
                 }
+                else if(msg.type.equals("addbuddy")) {
+                    if(msg.content.equals("TRUE")) {
+                        System.out.println("Success!");
+                    }
+                    else {
+                        System.out.println(msg.content);
+                    }
+                }
             }
             catch(Exception ex) {
                 System.out.println("Failed to read message");

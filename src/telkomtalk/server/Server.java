@@ -185,11 +185,21 @@ public class Server implements Runnable {
                 }
                 db.storeMessage(msg);
             }
-            else if(msg.type.equals("ping")) {
-                
-            }
-            else if(msg.type.equals("signup")) {
-                
+            else if(msg.type.equals("addbuddy")) {
+                short result = db.addBuddy(msg);
+                if(result == 0) {
+                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "TRUE", msg.sender));
+                    findUserThread(msg.content).send(new Message("addbuddy", msg.sender, "TRUE", msg.content));
+                }
+                else if(result == 1) {
+                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "You're already friends with " + msg.content, msg.sender));
+                }
+                else if(result == -2) {
+                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Can't find " + msg.content, msg.sender));
+                }
+                else if(result == -1) {
+                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Server Error", msg.sender));
+                }
             }
         }
     }

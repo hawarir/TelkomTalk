@@ -34,13 +34,13 @@ public class ClientConsole {
         client.send(msg);
         
         while(true) {
-            System.out.print("To: ");
-            String to = in.nextLine();
-            
-            System.out.print("Message: ");
+//            System.out.print("To: ");
+//            String to = in.nextLine();
+//            
+//            System.out.print("Message: ");
             String message = in.nextLine();
             
-            msg = new Message("message", username, message, to);
+            msg = new Message("addbuddy", username, message, "SERVER");
             client.send(msg);
         }
     }

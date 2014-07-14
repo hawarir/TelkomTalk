@@ -61,11 +61,41 @@ public class Database {
         try {
             String query = new String("INSERT INTO message (sender, content, recipient, time)"
                     + " VALUES ('" + msg.sender + "', '" + msg.content + "', '" + msg.recipient + "', now())");
-            System.out.println(query);
             st.executeUpdate(query);
         }
         catch(SQLException ex) {
             System.out.println("Failed to store message: " + ex.getMessage());
+        }
+    }
+    
+    public short addBuddy(Message msg) {
+        try {
+            String query = new String("SELECT * FROM user WHERE username = '" + msg.content + "'");
+            result = st.executeQuery(query);
+            if(result.first()) {
+                query = new String("SELECT * FROM buddy_list WHERE user = '" + msg.sender + "' AND friend = '" + msg.content + "'");
+                result = st.executeQuery(query);
+                if(!result.first()) {
+                    query = new String("INSERT INTO buddy_list VALUES ('" + msg.sender + "', '" + msg.content + "')");
+                    st.executeUpdate(query);
+                    
+                    query = new String("INSERT INTO buddy_list VALUES ('" + msg.content + "', '" + msg.sender + "')");
+                    st.executeUpdate(query);
+                    return 0;
+                }
+                else {
+                    System.out.println(msg.sender + " already friends with " + msg.content);
+                    return 1;
+                }
+            }
+            else {
+                System.out.println("Couldn't find " + msg.content + " in user list");
+                return -2;
+            }
+        }
+        catch(SQLException ex) {
+            System.out.println("Failed to add Buddy: " + ex.getMessage());
+            return -1;
         }
     }
     
