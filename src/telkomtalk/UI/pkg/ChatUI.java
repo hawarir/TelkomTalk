@@ -167,7 +167,8 @@ public class ChatUI extends javax.swing.JFrame {
         ImageIcon closeImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/close_default.png"));
         closeButton.setIcon(closeImage);
 
-        dispose();
+//        dispose();
+        hide();
     }//GEN-LAST:event_closeButtonMouseReleased
 
     private void minimizeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMousePressed
