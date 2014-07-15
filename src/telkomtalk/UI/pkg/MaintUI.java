@@ -63,10 +63,10 @@ public class MaintUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chatTab.setBackground(new java.awt.Color(255, 255, 255));
-        chatTab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        chatTab.setToolTipText("");
         chatTab.setName(""); // NOI18N
 
-        contactTab.setBackground(new java.awt.Color(255, 206, 99));
+        contactTab.setBackground(new java.awt.Color(255, 255, 255));
         contactTab.setForeground(new java.awt.Color(255, 204, 204));
         contactTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -88,10 +88,9 @@ public class MaintUI extends javax.swing.JFrame {
         status.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contactTab.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 150, 60));
 
-        chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/contacts_tab.png")), contactTab); // NOI18N
+        chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/contacts_tab.png")), contactTab, ""); // NOI18N
 
-        messageTab.setBackground(new java.awt.Color(204, 204, 255));
-        messageTab.setOpaque(true);
+        messageTab.setBackground(new java.awt.Color(255, 255, 255));
         chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/messages_tab.png")), messageTab); // NOI18N
         chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/settings_tab.png")), SettingsTab); // NOI18N
 

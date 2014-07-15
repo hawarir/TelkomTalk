@@ -141,7 +141,7 @@ public class LoginUI extends javax.swing.JFrame {
         });
         getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 214, 200, 30));
 
-        password.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        password.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         password.setBorder(null);
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,6 +238,9 @@ public class LoginUI extends javax.swing.JFrame {
     private void registerButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseReleased
         ImageIcon registerImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_register_default.png"));
         registerButton.setIcon(registerImage);
+        
+        RegisterUI register = new RegisterUI();
+        register.show();
     }//GEN-LAST:event_registerButtonMouseReleased
 
     private void closeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeButtonMouseEntered
