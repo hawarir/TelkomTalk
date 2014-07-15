@@ -6,6 +6,7 @@
 
 package telkomtalk.client;
 
+import telkomtalk.UI.pkg.*;
 import java.io.*;
 import java.net.*;
 import java.security.MessageDigest;
@@ -27,9 +28,11 @@ public class Client implements Runnable {
     public ObjectOutputStream out = null;
     public Thread thread;
     public boolean isLogin;
+    public LoginUI loginUI = null;
     
-    public Client() {
+    public Client(LoginUI ui) {
         try {
+            loginUI = ui;
             isLogin = false;
             serverAddress = "localhost";
             port = 5000;
@@ -38,7 +41,6 @@ public class Client implements Runnable {
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
             out.flush();
-            start();
         }
         catch(IOException ex) {
             System.out.println("Failed to start client");
@@ -82,18 +84,9 @@ public class Client implements Runnable {
         while(true) {
             try {
                 Message msg = (Message) in.readObject();
-                
+                System.out.println("Incoming: " + msg.toString());
                 if(msg.type.equals("message")) {
                     System.out.println(msg.sender + ": " + msg.content);
-                }
-                else if(msg.type.equals("login")) {
-                    if(msg.content.equals("TRUE")) {
-                        System.out.println("Login Successful");
-                        isLogin = true;
-                    }
-                    else {
-                        System.out.println("Login Failed");
-                    }
                 }
                 else if(msg.type.equals("addbuddy")) {
                     if(msg.content.equals("TRUE")) {
@@ -108,6 +101,24 @@ public class Client implements Runnable {
                 System.out.println("Failed to read message");
                 ex.printStackTrace();
             }
+        }
+    }
+    
+    public boolean login(String username, String password) {
+        try {
+            send(new Message("login", username, password, "SERVER"));
+            Message msg = (Message) in.readObject();
+            System.out.println(msg.toString());
+            if(msg.content.equals("TRUE")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(Exception ex) {
+            System.out.println("Failed to login: " + ex.getMessage());
+            return false;
         }
     }
     

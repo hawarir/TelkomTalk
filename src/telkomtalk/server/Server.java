@@ -164,8 +164,6 @@ public class Server implements Runnable {
                         clients[findClient(ID)].username = msg.sender;
                         System.out.println(clients[findClient(ID)].username + " has logged in...");
                         clients[findClient(ID)].send(new Message("login", "SERVER", "TRUE", msg.sender));
-                        announce("newuser", "SERVER", msg.sender);
-                        sendUserList(msg.sender);
                     }
                     else {
                         clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));

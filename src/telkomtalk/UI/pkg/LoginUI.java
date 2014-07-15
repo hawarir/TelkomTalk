@@ -8,6 +8,8 @@ package telkomtalk.UI.pkg;
 
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import telkomtalk.client.Client;
+import telkomtalk.server.Message;
 
 /**
  *
@@ -15,6 +17,7 @@ import javax.swing.ImageIcon;
  */
 public class LoginUI extends javax.swing.JFrame {
     Point point = new Point();
+    Client client = null;
     /**
      * Creates new form LoginUI
      */
@@ -37,19 +40,20 @@ public class LoginUI extends javax.swing.JFrame {
         minimizeButton = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         password = new javax.swing.JPasswordField();
+        messageLabel = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
-        });
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -146,14 +150,18 @@ public class LoginUI extends javax.swing.JFrame {
         });
         getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 266, 200, 30));
 
+        messageLabel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(messageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 260, 30));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/LoginUI.png"))); // NOI18N
         background.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 backgroundAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 550));
@@ -190,9 +198,21 @@ public class LoginUI extends javax.swing.JFrame {
         ImageIcon loginImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_login1.png"));
         loginButton.setIcon(loginImage);
         
-        MaintUI chat = new MaintUI();
-        chat.show();                
-        dispose();
+        client = new Client(this);
+        String user = username.getText();
+        String pass = new String(password.getPassword());
+        if(client.login(user, client.encryptPassword(pass))) {
+            client.start();
+            MaintUI chat = new MaintUI();
+            chat.show();
+            dispose();
+        }
+        else {
+            username.setText("");
+            password.setText("");
+            messageLabel.setText("Incorrect username or password");
+            username.requestFocus();
+        }
     }//GEN-LAST:event_loginButtonMouseReleased
 
     private void loginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMousePressed
@@ -265,11 +285,39 @@ public class LoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
-        // TODO add your handling code here:
+        client = new Client(this);
+        String user = username.getText();
+        String pass = new String(password.getPassword());
+        if(client.login(user, client.encryptPassword(pass))) {
+            client.start();
+            MaintUI chat = new MaintUI();
+            chat.show();
+            dispose();
+        }
+        else {
+            username.setText("");
+            password.setText("");
+            messageLabel.setText("Incorrect username or password");
+            username.requestFocus();
+        }
     }//GEN-LAST:event_usernameActionPerformed
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
+        client = new Client(this);
+        String user = username.getText();
+        String pass = new String(password.getPassword());
+        if(client.login(user, client.encryptPassword(pass))) {
+            client.start();
+            MaintUI chat = new MaintUI();
+            chat.show();
+            dispose();
+        }
+        else {
+            username.setText("");
+            password.setText("");
+            messageLabel.setText("Incorrect username or password");
+            username.requestFocus();
+        }
     }//GEN-LAST:event_passwordActionPerformed
 
     /**
@@ -311,6 +359,7 @@ public class LoginUI extends javax.swing.JFrame {
     private javax.swing.JLabel background;
     private javax.swing.JLabel closeButton;
     private javax.swing.JLabel loginButton;
+    private javax.swing.JLabel messageLabel;
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel registerButton;
