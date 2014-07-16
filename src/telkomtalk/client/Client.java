@@ -23,17 +23,16 @@ public class Client implements Runnable {
     
     public int port;
     public String serverAddress = "";
+    public String username = "";
     public Socket socket = null;
     public ObjectInputStream in = null;
     public ObjectOutputStream out = null;
     public Thread thread;
-    public boolean isLogin;
     public LoginUI loginUI = null;
     
     public Client(LoginUI ui) {
         try {
             loginUI = ui;
-            isLogin = false;
             serverAddress = "localhost";
             port = 5000;
             socket = new Socket(InetAddress.getByName(serverAddress), port);
@@ -96,6 +95,9 @@ public class Client implements Runnable {
                         System.out.println(msg.content);
                     }
                 }
+                else if(msg.type.equals("contacts")) {
+                    System.out.println(msg.content);
+                }
             }
             catch(Exception ex) {
                 System.out.println("Failed to read message");
@@ -110,6 +112,7 @@ public class Client implements Runnable {
             Message msg = (Message) in.readObject();
             System.out.println(msg.toString());
             if(msg.content.equals("TRUE")) {
+                this.username = username; 
                 return true;
             }
             else {
@@ -120,6 +123,10 @@ public class Client implements Runnable {
             System.out.println("Failed to login: " + ex.getMessage());
             return false;
         }
+    }
+    
+    public void getContacts() {
+        send(new Message("contacts", this.username, "", "SERVER"));        
     }
     
     public void send(Message msg) {

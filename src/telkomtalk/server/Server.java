@@ -153,51 +153,51 @@ public class Server implements Runnable {
     }
     
     public synchronized void handle(int ID, Message msg) {
-        if(msg.content.equals(".bye")) {
-            announce("signout", "SERVER", msg.sender);
-            remove(ID);
-        }
-        else {
-            if(msg.type.equals("login")) {
-                if(findUserThread(msg.sender) == null) {
-                    if(db.checkLogin(msg.sender, msg.content)) {
-                        clients[findClient(ID)].username = msg.sender;
-                        System.out.println(clients[findClient(ID)].username + " has logged in...");
-                        clients[findClient(ID)].send(new Message("login", "SERVER", "TRUE", msg.sender));
-                    }
-                    else {
-                        clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));
-                    }
+        if(msg.type.equals("login")) {
+            if(findUserThread(msg.sender) == null) {
+                if(db.checkLogin(msg.sender, msg.content)) {
+                    clients[findClient(ID)].username = msg.sender;
+                    System.out.println(clients[findClient(ID)].username + " has logged in...");
+                    clients[findClient(ID)].send(new Message("login", "SERVER", "TRUE", msg.sender));
                 }
                 else {
                     clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));
                 }
             }
-            else if(msg.type.equals("message")) {
-                if(msg.recipient.equals("All")) {
-                    announce("message", msg.sender, msg.content);
-                }
-                else {
-                    findUserThread(msg.recipient).send(msg);
-                    clients[findClient(ID)].send(msg);
-                }
-                db.storeMessage(msg);
+            else {
+                clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));
             }
-            else if(msg.type.equals("addbuddy")) {
-                short result = db.addBuddy(msg);
-                if(result == 0) {
-                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "TRUE", msg.sender));
-                    findUserThread(msg.content).send(new Message("addbuddy", msg.sender, "TRUE", msg.content));
-                }
-                else if(result == 1) {
-                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "You're already friends with " + msg.content, msg.sender));
-                }
-                else if(result == -2) {
-                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Can't find " + msg.content, msg.sender));
-                }
-                else if(result == -1) {
-                    clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Server Error", msg.sender));
-                }
+        }
+        else if(msg.type.equals("logout")) {
+            remove(ID);
+        }
+        else if(msg.type.equals("message")) {
+            if(msg.recipient.equals("All")) {
+                announce("message", msg.sender, msg.content);
+            }
+            else {
+                findUserThread(msg.recipient).send(msg);
+                clients[findClient(ID)].send(msg);
+            }
+            db.storeMessage(msg);
+        }
+        else if(msg.type.equals("contacts")) {
+            sendUserList(msg.sender);
+        }
+        else if(msg.type.equals("addbuddy")) {
+            short result = db.addBuddy(msg);
+            if(result == 0) {
+                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "TRUE", msg.sender));
+                findUserThread(msg.content).send(new Message("addbuddy", msg.sender, "TRUE", msg.content));
+            }
+            else if(result == 1) {
+                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "You're already friends with " + msg.content, msg.sender));
+            }
+            else if(result == -2) {
+                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Can't find " + msg.content, msg.sender));
+            }
+            else if(result == -1) {
+                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Server Error", msg.sender));
             }
         }
     }
@@ -209,9 +209,10 @@ public class Server implements Runnable {
         }
     }
     
-    public void sendUserList(String toWhom) {
-        for(int i = 0; i < clientCount; i++) {
-            findUserThread(toWhom).send(new Message("newuser", "SERVER", clients[i].username, toWhom));
+    public void sendUserList(String username) {
+        ArrayList<String> contacts = db.getContacts(username);
+        for(int i = 0; i < contacts.size(); i++) {
+            findUserThread(username).send(new Message("contacts", "SERVER", contacts.get(i), username));
         }
     }
     

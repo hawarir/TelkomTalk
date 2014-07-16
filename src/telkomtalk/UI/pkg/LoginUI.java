@@ -204,6 +204,7 @@ public class LoginUI extends javax.swing.JFrame {
         if(client.login(user, client.encryptPassword(pass))) {
             client.start();
             MaintUI chat = new MaintUI();
+            chat.setClient(client);
             chat.show();
             dispose();
         }
@@ -294,6 +295,7 @@ public class LoginUI extends javax.swing.JFrame {
         if(client.login(user, client.encryptPassword(pass))) {
             client.start();
             MaintUI chat = new MaintUI();
+            chat.setClient(client);
             chat.show();
             dispose();
         }
@@ -312,6 +314,7 @@ public class LoginUI extends javax.swing.JFrame {
         if(client.login(user, client.encryptPassword(pass))) {
             client.start();
             MaintUI chat = new MaintUI();
+            chat.setClient(client);
             chat.show();
             dispose();
         }
