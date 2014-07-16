@@ -7,6 +7,7 @@
 package telkomtalk.server;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -99,20 +100,19 @@ public class Database {
         }
     }
     
-    public void getUserList() {
+    public ArrayList<String> getContacts(String username) {
         try {
-            String query = new String("SELECT * FROM user");
+            String query = new String("SELECT friend FROM buddy_list where user = '" + username + "'");
             result = st.executeQuery(query);
-            System.out.println("Daftar User");
+            ArrayList<String> contacts = new ArrayList<String>();
             while(result.next()) {
-                String username = result.getString("username");
-                String name = result.getString("name");
-                
-                System.out.println("username: " + username + " name: " + name);
+                contacts.add(result.getString("friend"));
             }
+            return contacts;
         }
         catch(SQLException ex) {
-            ex.printStackTrace();
+            System.out.println("Failed to get Contacts for " + username + ": " + ex.getMessage());
+            return null;
         }
     }
 }
