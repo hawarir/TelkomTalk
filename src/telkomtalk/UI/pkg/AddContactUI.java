@@ -33,12 +33,14 @@ public class AddContactUI extends javax.swing.JFrame {
 
         closeButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
+        avatar = new javax.swing.JLabel();
+        username = new javax.swing.JTextField();
+        addContactButton = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(360, 182));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(360, 182));
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -89,6 +91,35 @@ public class AddContactUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 3, 20, 20));
+
+        avatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avatar.setText("avatar");
+        avatar.setMaximumSize(new java.awt.Dimension(55, 55));
+        avatar.setMinimumSize(new java.awt.Dimension(55, 55));
+        avatar.setPreferredSize(new java.awt.Dimension(55, 55));
+        getContentPane().add(avatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 55, 55));
+
+        username.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        username.setBorder(null);
+        getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 61, 200, 25));
+
+        addContactButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"))); // NOI18N
+        addContactButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addContactButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addContactButtonMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addContactButtonMousePressed(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addContactButtonMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                addContactButtonMouseReleased(evt);
+            }
+        });
+        getContentPane().add(addContactButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 150, 35));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/AddContactUI.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 182));
@@ -151,6 +182,26 @@ public class AddContactUI extends javax.swing.JFrame {
         setExtendedState(getExtendedState()| LoginUI.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
+    private void addContactButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseEntered
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_hover.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMouseEntered
+
+    private void addContactButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMousePressed
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_pressed.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMousePressed
+
+    private void addContactButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseExited
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMouseExited
+
+    private void addContactButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseReleased
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -187,8 +238,11 @@ public class AddContactUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addContactButton;
+    private javax.swing.JLabel avatar;
     private javax.swing.JLabel background;
     private javax.swing.JLabel closeButton;
     private javax.swing.JLabel minimizeButton;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
