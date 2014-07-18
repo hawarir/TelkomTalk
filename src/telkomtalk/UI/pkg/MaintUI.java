@@ -102,10 +102,19 @@ public class MaintUI extends javax.swing.JFrame {
 
         chatTab = new javax.swing.JTabbedPane();
         contactTab = new javax.swing.JPanel();
+<<<<<<< HEAD
         ScrollPane = new javax.swing.JScrollPane();
         contactTable = new javax.swing.JTable();
         messageTab = new javax.swing.JTabbedPane();
         SettingsTab = new javax.swing.JTabbedPane();
+=======
+        avatarContact = new javax.swing.JLabel();
+        usernameContact = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        addContactButton = new javax.swing.JLabel();
+>>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
         closeButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -129,7 +138,9 @@ public class MaintUI extends javax.swing.JFrame {
 
         chatTab.setBackground(new java.awt.Color(255, 255, 255));
         chatTab.setToolTipText("");
+        chatTab.setMinimumSize(new java.awt.Dimension(500, 580));
         chatTab.setName(""); // NOI18N
+        chatTab.setPreferredSize(new java.awt.Dimension(500, 580));
 
         contactTab.setBackground(new java.awt.Color(255, 255, 255));
         contactTab.setForeground(new java.awt.Color(255, 204, 204));
@@ -171,9 +182,32 @@ public class MaintUI extends javax.swing.JFrame {
 
         chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/contacts_tab.png")), contactTab, ""); // NOI18N
 
-        messageTab.setBackground(new java.awt.Color(255, 255, 255));
-        chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/messages_tab.png")), messageTab); // NOI18N
-        chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/settings_tab.png")), SettingsTab); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/messages_tab.png")), jPanel2); // NOI18N
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        addContactButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"))); // NOI18N
+        addContactButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addContactButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addContactButtonMousePressed(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addContactButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addContactButtonMouseEntered(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                addContactButtonMouseReleased(evt);
+            }
+        });
+        jPanel1.add(addContactButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
+
+        chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/settings_tab.png")), jPanel1); // NOI18N
 
         getContentPane().add(chatTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 500, 580));
 
@@ -282,6 +316,37 @@ public class MaintUI extends javax.swing.JFrame {
         
         String partner = (String) contactTable.getValueAt(row, 0);
         
+<<<<<<< HEAD
+=======
+        chat.show();
+    }//GEN-LAST:event_usernameContactMouseReleased
+
+
+    private void addContactButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseEntered
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_hover.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMouseEntered
+
+    private void addContactButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseExited
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMouseExited
+
+    private void addContactButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMousePressed
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_pressed.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMousePressed
+
+    private void addContactButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseReleased
+        ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"));
+        addContactButton.setIcon(addContactImage);
+    }//GEN-LAST:event_addContactButtonMouseReleased
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        contactTab.add(new javax.swing.JLabel("Avatar"));
+        contactTab.add(new javax.swing.JLabel("Contact"));
+        contactTab.add(new javax.swing.JLabel("Status"));
+>>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
         
         ChatUI chatUI = new ChatUI();
         chatUI.setMainUI(this);
@@ -289,6 +354,7 @@ public class MaintUI extends javax.swing.JFrame {
         addActive(chatUI);
         chatUI.show();
     }//GEN-LAST:event_contactTableMouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -321,13 +387,22 @@ public class MaintUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JScrollPane ScrollPane;
+=======
+    private javax.swing.JLabel addContactButton;
+>>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
     private javax.swing.JTabbedPane SettingsTab;
     private javax.swing.JLabel background;
     private javax.swing.JTabbedPane chatTab;
     private javax.swing.JLabel closeButton;
     private javax.swing.JPanel contactTab;
+<<<<<<< HEAD
     private javax.swing.JTable contactTable;
+=======
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+>>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
     private javax.swing.JTabbedPane messageTab;
     private javax.swing.JLabel minimizeButton;
     // End of variables declaration//GEN-END:variables

@@ -44,6 +44,7 @@ public class RegisterUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(360, 581));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(360, 581));
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -115,9 +116,6 @@ public class RegisterUI extends javax.swing.JFrame {
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_cancel_default.png"))); // NOI18N
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelButton.setMaximumSize(new java.awt.Dimension(110, 35));
-        cancelButton.setMinimumSize(new java.awt.Dimension(110, 35));
-        cancelButton.setPreferredSize(new java.awt.Dimension(110, 35));
         cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 cancelButtonMouseExited(evt);
