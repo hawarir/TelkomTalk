@@ -102,19 +102,16 @@ public class MaintUI extends javax.swing.JFrame {
 
         chatTab = new javax.swing.JTabbedPane();
         contactTab = new javax.swing.JPanel();
-<<<<<<< HEAD
         ScrollPane = new javax.swing.JScrollPane();
         contactTable = new javax.swing.JTable();
         messageTab = new javax.swing.JTabbedPane();
         SettingsTab = new javax.swing.JTabbedPane();
-=======
         avatarContact = new javax.swing.JLabel();
         usernameContact = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         addContactButton = new javax.swing.JLabel();
->>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
         closeButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -310,16 +307,18 @@ public class MaintUI extends javax.swing.JFrame {
         setExtendedState(getExtendedState()| LoginUI.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
-    private void contactTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactTableMouseClicked
+    private void contactTableMouseClicked(java.awt.event.MouseEvent evt) {                                          
         JTable target = (JTable) evt.getSource();
         int row = target.getSelectedRow();
         
         String partner = (String) contactTable.getValueAt(row, 0);
         
-<<<<<<< HEAD
-=======
-        chat.show();
-    }//GEN-LAST:event_usernameContactMouseReleased
+        ChatUI chatUI = new ChatUI();
+        chatUI.setMainUI(this);
+        chatUI.setPartner(partner);
+        addActive(chatUI);
+        chatUI.show();
+    }                                             
 
 
     private void addContactButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseEntered
@@ -342,18 +341,17 @@ public class MaintUI extends javax.swing.JFrame {
         addContactButton.setIcon(addContactImage);
     }//GEN-LAST:event_addContactButtonMouseReleased
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
         contactTab.add(new javax.swing.JLabel("Avatar"));
         contactTab.add(new javax.swing.JLabel("Contact"));
         contactTab.add(new javax.swing.JLabel("Status"));
->>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
         
         ChatUI chatUI = new ChatUI();
         chatUI.setMainUI(this);
         chatUI.setPartner(partner);
         addActive(chatUI);
         chatUI.show();
-    }//GEN-LAST:event_contactTableMouseClicked
+    }                                         
 
 
     /**
@@ -387,22 +385,16 @@ public class MaintUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
     private javax.swing.JScrollPane ScrollPane;
-=======
     private javax.swing.JLabel addContactButton;
->>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
     private javax.swing.JTabbedPane SettingsTab;
     private javax.swing.JLabel background;
     private javax.swing.JTabbedPane chatTab;
     private javax.swing.JLabel closeButton;
     private javax.swing.JPanel contactTab;
-<<<<<<< HEAD
     private javax.swing.JTable contactTable;
-=======
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
->>>>>>> 3e272e6fd801bebe6adadb83dc869a7c6f09b918
     private javax.swing.JTabbedPane messageTab;
     private javax.swing.JLabel minimizeButton;
     // End of variables declaration//GEN-END:variables
