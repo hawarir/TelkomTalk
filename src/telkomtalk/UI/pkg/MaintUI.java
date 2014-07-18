@@ -7,8 +7,11 @@
 package telkomtalk.UI.pkg;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import telkomtalk.client.Client;
 import telkomtalk.server.Message;
 
@@ -19,17 +22,75 @@ import telkomtalk.server.Message;
 public class MaintUI extends javax.swing.JFrame {
     Point point = new Point();
     Client client = null;
+    DefaultTableModel model;
+    ArrayList<ChatUI> activeChat = null;
     /**
      * Creates new form ChatUI
      */
     public MaintUI() {
         initComponents();
+        activeChat = new ArrayList<>();
     }
     
     public void setClient(Client _client) {
         this.client = _client;
+        client.getContacts();
     }
-
+    
+    public void addContact(String username, String name) {
+        model = (DefaultTableModel) contactTable.getModel();
+        model.addRow(new Object[]{username, name});
+    }
+    
+    public void addActive(ChatUI ui) {
+        activeChat.add(ui);
+    }
+    
+    public void removeActive(ChatUI ui) {
+        activeChat.remove(ui);
+    }
+    
+    public ChatUI findActive(String partnerName) {
+        for(int i = 0; i < activeChat.size(); i++) {
+            if(activeChat.get(i).getPartner().equals(partnerName)) {
+                return activeChat.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public void getmessage(Message msg) {
+        if(findActive(msg.sender) != null) {
+            findActive(msg.sender).insertMessage(msg.content);
+        }
+        else {
+            ChatUI chatUI = new ChatUI();
+            chatUI.setMainUI(this);
+            chatUI.setPartner(msg.sender);
+            addActive(chatUI);
+            chatUI.show();
+            chatUI.insertMessage(msg.content);
+        }
+        
+        /*for(int i = 0; i < activeChat.size(); i++) {
+            if(activeChat.get(i).getPartner().equals(msg.sender)) {
+                activeChat.get(i).insertMessage(msg.content);
+                return;
+            }
+        }
+        
+        ChatUI chatUI = new ChatUI();
+        chatUI.setMainUI(this);
+        chatUI.setPartner(msg.sender);
+        addActive(chatUI);
+        chatUI.show();
+        chatUI.insertMessage(msg.content);*/
+    }
+    
+    public void sendMessage(String recipient, String content) {
+        client.send(new Message("message", client.username, content, recipient));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,14 +102,12 @@ public class MaintUI extends javax.swing.JFrame {
 
         chatTab = new javax.swing.JTabbedPane();
         contactTab = new javax.swing.JPanel();
-        avatarContact = new javax.swing.JLabel();
-        usernameContact = new javax.swing.JLabel();
-        status = new javax.swing.JLabel();
+        ScrollPane = new javax.swing.JScrollPane();
+        contactTable = new javax.swing.JTable();
         messageTab = new javax.swing.JTabbedPane();
         SettingsTab = new javax.swing.JTabbedPane();
         closeButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
-        addButton = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,23 +135,39 @@ public class MaintUI extends javax.swing.JFrame {
         contactTab.setForeground(new java.awt.Color(255, 204, 204));
         contactTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        avatarContact.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        avatarContact.setText("Avatar");
-        avatarContact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        contactTab.add(avatarContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 60, 60));
+        contactTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        usernameContact.setText("Nama");
-        usernameContact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        usernameContact.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                usernameContactMouseReleased(evt);
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        contactTab.add(usernameContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 220, 60));
+        contactTable.setShowHorizontalLines(false);
+        contactTable.setShowVerticalLines(false);
+        contactTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                contactTableMouseClicked(evt);
+            }
+        });
+        ScrollPane.setViewportView(contactTable);
 
-        status.setText("Status");
-        status.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        contactTab.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 150, 60));
+        contactTab.add(ScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 430, 360));
 
         chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/contacts_tab.png")), contactTab, ""); // NOI18N
 
@@ -139,14 +214,6 @@ public class MaintUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 3, 20, 20));
-
-        addButton.setText("Add Contact");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/MainUI.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 700));
@@ -209,20 +276,19 @@ public class MaintUI extends javax.swing.JFrame {
         setExtendedState(getExtendedState()| LoginUI.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
-    private void usernameContactMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usernameContactMouseReleased
-        ChatUI chat = new ChatUI();
+    private void contactTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactTableMouseClicked
+        JTable target = (JTable) evt.getSource();
+        int row = target.getSelectedRow();
         
-        chat.show();
-    }//GEN-LAST:event_usernameContactMouseReleased
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        contactTab.add(new javax.swing.JLabel("Avatar"));
-        contactTab.add(new javax.swing.JLabel("Contact"));
-        contactTab.add(new javax.swing.JLabel("Status"));
+        String partner = (String) contactTable.getValueAt(row, 0);
         
-        contactTab.revalidate();
-        contactTab.repaint();
-    }//GEN-LAST:event_addButtonActionPerformed
+        
+        ChatUI chatUI = new ChatUI();
+        chatUI.setMainUI(this);
+        chatUI.setPartner(partner);
+        addActive(chatUI);
+        chatUI.show();
+    }//GEN-LAST:event_contactTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -255,16 +321,14 @@ public class MaintUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JTabbedPane SettingsTab;
-    private javax.swing.JButton addButton;
-    private javax.swing.JLabel avatarContact;
     private javax.swing.JLabel background;
     private javax.swing.JTabbedPane chatTab;
     private javax.swing.JLabel closeButton;
     private javax.swing.JPanel contactTab;
+    private javax.swing.JTable contactTable;
     private javax.swing.JTabbedPane messageTab;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JLabel status;
-    private javax.swing.JLabel usernameContact;
     // End of variables declaration//GEN-END:variables
 }

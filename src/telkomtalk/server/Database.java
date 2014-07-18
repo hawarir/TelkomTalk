@@ -115,4 +115,17 @@ public class Database {
             return null;
         }
     }
+    
+    public String getName(String username) {
+        try {
+            String query = new String("SELECT name FROM user WHERE username = '" + username + "'");
+            result = st.executeQuery(query);
+            result.first();
+            return result.getString("name");
+        }
+        catch(SQLException ex) {
+            System.out.println("Failed to get Name for " + username + ": " + ex.getMessage());
+            return null;
+        }
+    }
 }
