@@ -177,7 +177,6 @@ public class Server implements Runnable {
             }
             else {
                 findUserThread(msg.recipient).send(msg);
-                clients[findClient(ID)].send(msg);
             }
             db.storeMessage(msg);
         }
@@ -212,7 +211,8 @@ public class Server implements Runnable {
     public void sendUserList(String username) {
         ArrayList<String> contacts = db.getContacts(username);
         for(int i = 0; i < contacts.size(); i++) {
-            findUserThread(username).send(new Message("contacts", "SERVER", contacts.get(i), username));
+            String content = contacts.get(i) + "@" + db.getName(contacts.get(i));
+            findUserThread(username).send(new Message("contacts", "SERVER", content, username));
         }
     }
     

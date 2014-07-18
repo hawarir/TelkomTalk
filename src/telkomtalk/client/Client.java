@@ -29,6 +29,7 @@ public class Client implements Runnable {
     public ObjectOutputStream out = null;
     public Thread thread;
     public LoginUI loginUI = null;
+    public MaintUI mainUI = null;
     
     public Client(LoginUI ui) {
         try {
@@ -45,6 +46,10 @@ public class Client implements Runnable {
             System.out.println("Failed to start client");
             ex.printStackTrace();
         }
+    }
+    
+    public void setMainUI(MaintUI ui) {
+        mainUI = ui;
     }
     
     public String encryptPassword(String password) {
@@ -85,6 +90,7 @@ public class Client implements Runnable {
                 Message msg = (Message) in.readObject();
                 System.out.println("Incoming: " + msg.toString());
                 if(msg.type.equals("message")) {
+                    mainUI.getmessage(msg);
                     System.out.println(msg.sender + ": " + msg.content);
                 }
                 else if(msg.type.equals("addbuddy")) {
@@ -96,7 +102,13 @@ public class Client implements Runnable {
                     }
                 }
                 else if(msg.type.equals("contacts")) {
-                    System.out.println(msg.content);
+                    String[] content = msg.content.split("@");
+                    String contactUsername = content[0];
+                    String contactName = content[1];
+                    
+                    System.out.println(contactUsername + " " + contactName);
+                    
+                    mainUI.addContact(contactUsername, contactName);
                 }
             }
             catch(Exception ex) {

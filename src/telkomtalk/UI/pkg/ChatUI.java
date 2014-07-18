@@ -15,11 +15,30 @@ import javax.swing.ImageIcon;
  */
 public class ChatUI extends javax.swing.JFrame {
     Point point = new Point();
+    String partner = null;
+    MaintUI mainUI = null;
     /**
      * Creates new form ChatUI
      */
     public ChatUI() {
         initComponents();
+    }
+    
+    public void setPartner(String partner) {
+        this.partner = partner;
+        username.setText(partner);
+    }
+    
+    public void setMainUI(MaintUI ui) {
+        mainUI = ui;
+    }
+    
+    public String getPartner() {
+        return partner;
+    }
+    
+    public void insertMessage(String message) {
+        otherMessage.append(partner + ": " + message + "\n");
     }
 
     /**
@@ -38,23 +57,21 @@ public class ChatUI extends javax.swing.JFrame {
         status = new javax.swing.JLabel();
         otherMessageScroll = new javax.swing.JScrollPane();
         otherMessage = new javax.swing.JTextArea();
-        myMessageScroll = new javax.swing.JScrollPane();
-        myMessage = new javax.swing.JTextArea();
+        myMessage = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(249, 191, 59));
         setMinimumSize(new java.awt.Dimension(360, 550));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(360, 550));
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
-        });
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -112,6 +129,7 @@ public class ChatUI extends javax.swing.JFrame {
 
         otherMessageScroll.setBorder(null);
 
+        otherMessage.setEditable(false);
         otherMessage.setColumns(20);
         otherMessage.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         otherMessage.setRows(5);
@@ -121,15 +139,20 @@ public class ChatUI extends javax.swing.JFrame {
 
         getContentPane().add(otherMessageScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 119, 330, 270));
 
-        myMessageScroll.setBorder(null);
-
-        myMessage.setColumns(20);
         myMessage.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        myMessage.setRows(5);
-        myMessage.setBorder(null);
-        myMessageScroll.setViewportView(myMessage);
-
-        getContentPane().add(myMessageScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 434, 330, 100));
+        myMessage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        myMessage.setText("Type your message here");
+        myMessage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                myMessageMouseClicked(evt);
+            }
+        });
+        myMessage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                myMessageActionPerformed(evt);
+            }
+        });
+        getContentPane().add(myMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 320, 90));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/ChatUI.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 550));
@@ -193,6 +216,17 @@ public class ChatUI extends javax.swing.JFrame {
         setExtendedState(getExtendedState()| LoginUI.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
+    private void myMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myMessageActionPerformed
+        String message = myMessage.getText();
+        mainUI.sendMessage(partner, message);
+        otherMessage.append("You: " + message + "\n");
+        myMessage.setText("");
+    }//GEN-LAST:event_myMessageActionPerformed
+
+    private void myMessageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myMessageMouseClicked
+        myMessage.setText("");
+    }//GEN-LAST:event_myMessageMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -233,8 +267,7 @@ public class ChatUI extends javax.swing.JFrame {
     private javax.swing.JLabel background;
     private javax.swing.JLabel closeButton;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JTextArea myMessage;
-    private javax.swing.JScrollPane myMessageScroll;
+    private javax.swing.JTextField myMessage;
     private javax.swing.JTextArea otherMessage;
     private javax.swing.JScrollPane otherMessageScroll;
     private javax.swing.JLabel status;

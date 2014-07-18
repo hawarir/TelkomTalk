@@ -206,6 +206,7 @@ public class LoginUI extends javax.swing.JFrame {
             client.start();
             MaintUI chat = new MaintUI();
             chat.setClient(client);
+            client.setMainUI(chat);
             chat.show();
             dispose();
         }
@@ -297,6 +298,7 @@ public class LoginUI extends javax.swing.JFrame {
             client.start();
             MaintUI chat = new MaintUI();
             chat.setClient(client);
+            client.setMainUI(chat);
             chat.show();
             dispose();
         }
@@ -316,6 +318,7 @@ public class LoginUI extends javax.swing.JFrame {
             client.start();
             MaintUI chat = new MaintUI();
             chat.setClient(client);
+            client.setMainUI(chat);
             chat.show();
             dispose();
         }
