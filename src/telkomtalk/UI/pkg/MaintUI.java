@@ -106,9 +106,6 @@ public class MaintUI extends javax.swing.JFrame {
         contactTable = new javax.swing.JTable();
         messageTab = new javax.swing.JTabbedPane();
         SettingsTab = new javax.swing.JTabbedPane();
-        avatarContact = new javax.swing.JLabel();
-        usernameContact = new javax.swing.JLabel();
-        status = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         addContactButton = new javax.swing.JLabel();
@@ -346,12 +343,12 @@ public class MaintUI extends javax.swing.JFrame {
         contactTab.add(new javax.swing.JLabel("Contact"));
         contactTab.add(new javax.swing.JLabel("Status"));
         
-        ChatUI chatUI = new ChatUI();
+        /*ChatUI chatUI = new ChatUI();
         chatUI.setMainUI(this);
         chatUI.setPartner(partner);
         addActive(chatUI);
-        chatUI.show();
-    }                                         
+        chatUI.show();*/
+    }
 
 
     /**
