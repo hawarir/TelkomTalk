@@ -79,14 +79,14 @@ public class LoginUI extends javax.swing.JFrame {
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_register_default.png"))); // NOI18N
         registerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerButtonMouseExited(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButtonMouseEntered(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 registerButtonMousePressed(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                registerButtonMouseExited(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 registerButtonMouseReleased(evt);
@@ -151,6 +151,7 @@ public class LoginUI extends javax.swing.JFrame {
         getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 266, 200, 30));
 
         messageLabel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        messageLabel.setForeground(new java.awt.Color(255, 0, 0));
         messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(messageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 260, 30));
 

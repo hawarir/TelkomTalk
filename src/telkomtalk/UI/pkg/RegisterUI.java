@@ -7,7 +7,11 @@
 package telkomtalk.UI.pkg;
 
 import java.awt.Point;
+import java.io.File;
+import java.io.FileFilter;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -39,12 +43,13 @@ public class RegisterUI extends javax.swing.JFrame {
         emailField = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
         retypeField = new javax.swing.JPasswordField();
+        avatar = new javax.swing.JLabel();
+        uploadButton = new javax.swing.JLabel();
         bakcground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(360, 581));
+        setMinimumSize(new java.awt.Dimension(360, 592));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(360, 581));
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -112,7 +117,7 @@ public class RegisterUI extends javax.swing.JFrame {
                 registerButton2MouseReleased(evt);
             }
         });
-        getContentPane().add(registerButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 520, 110, 40));
+        getContentPane().add(registerButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 540, 110, 40));
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_cancel_default.png"))); // NOI18N
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -130,13 +135,13 @@ public class RegisterUI extends javax.swing.JFrame {
                 cancelButtonMouseReleased(evt);
             }
         });
-        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 520, 110, 40));
+        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, 110, 40));
 
         usernameField.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         usernameField.setBorder(null);
         usernameField.setMinimumSize(new java.awt.Dimension(20, 240));
         usernameField.setPreferredSize(new java.awt.Dimension(20, 240));
-        getContentPane().add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 177, 230, 25));
+        getContentPane().add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 135, 230, 25));
 
         emailField.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         emailField.setBorder(null);
@@ -147,22 +152,44 @@ public class RegisterUI extends javax.swing.JFrame {
                 emailFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 262, 230, 25));
+        getContentPane().add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 220, 230, 25));
 
         passField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         passField.setBorder(null);
         passField.setMinimumSize(new java.awt.Dimension(230, 25));
         passField.setPreferredSize(new java.awt.Dimension(230, 25));
-        getContentPane().add(passField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 343, 230, 25));
+        getContentPane().add(passField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 301, 230, 25));
 
         retypeField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         retypeField.setBorder(null);
         retypeField.setMinimumSize(new java.awt.Dimension(230, 25));
         retypeField.setPreferredSize(new java.awt.Dimension(230, 25));
-        getContentPane().add(retypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 432, 230, 25));
+        getContentPane().add(retypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 390, 230, 25));
+
+        avatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avatar.setText("avatar");
+        avatar.setMaximumSize(new java.awt.Dimension(58, 58));
+        avatar.setMinimumSize(new java.awt.Dimension(58, 58));
+        avatar.setPreferredSize(new java.awt.Dimension(58, 58));
+        getContentPane().add(avatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 450, -1, -1));
+
+        uploadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_upload_default.png"))); // NOI18N
+        uploadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        uploadButton.setMaximumSize(new java.awt.Dimension(109, 25));
+        uploadButton.setMinimumSize(new java.awt.Dimension(109, 25));
+        uploadButton.setPreferredSize(new java.awt.Dimension(109, 25));
+        uploadButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                uploadButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                uploadButtonMouseReleased(evt);
+            }
+        });
+        getContentPane().add(uploadButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, -1, -1));
 
         bakcground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/RegisterUI.png"))); // NOI18N
-        getContentPane().add(bakcground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 580));
+        getContentPane().add(bakcground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 592));
 
         pack();
         setLocationRelativeTo(null);
@@ -265,8 +292,33 @@ public class RegisterUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseReleased
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void uploadButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadButtonMousePressed
+        ImageIcon uploadImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_upload_pressed.png"));
+        uploadButton.setIcon(uploadImage);
+    }//GEN-LAST:event_uploadButtonMousePressed
+
+    private void uploadButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadButtonMouseReleased
+        ImageIcon uploadImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_upload_default.png"));
+        uploadButton.setIcon(uploadImage);
+        
+        //================================================================================================================
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image","jpg","png");
+        
+        JFileChooser chooser = new JFileChooser();
+        
+        chooser.addChoosableFileFilter(filter);
+        
+        int returnVal = chooser.showOpenDialog(null);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION ){
+            File myFile = chooser.getSelectedFile();
+            String text = myFile + "";
+        }
+    }//GEN-LAST:event_uploadButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -279,7 +331,7 @@ public class RegisterUI extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -304,6 +356,7 @@ public class RegisterUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel avatar;
     private javax.swing.JLabel bakcground;
     private javax.swing.JLabel cancelButton;
     private javax.swing.JLabel closeButton;
@@ -312,6 +365,7 @@ public class RegisterUI extends javax.swing.JFrame {
     private javax.swing.JPasswordField passField;
     private javax.swing.JLabel registerButton2;
     private javax.swing.JPasswordField retypeField;
+    private javax.swing.JLabel uploadButton;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
