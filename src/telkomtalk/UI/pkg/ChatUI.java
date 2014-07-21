@@ -7,7 +7,10 @@
 package telkomtalk.UI.pkg;
 
 import java.awt.Point;
+import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -58,20 +61,21 @@ public class ChatUI extends javax.swing.JFrame {
         otherMessageScroll = new javax.swing.JScrollPane();
         otherMessage = new javax.swing.JTextArea();
         myMessage = new javax.swing.JTextField();
+        attachButton = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(249, 191, 59));
         setMinimumSize(new java.awt.Dimension(360, 550));
         setUndecorated(true);
         setResizable(false);
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
-            }
-        });
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
+            }
+        });
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -154,6 +158,22 @@ public class ChatUI extends javax.swing.JFrame {
         });
         getContentPane().add(myMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 320, 90));
 
+        attachButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        attachButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_attachment_default.png"))); // NOI18N
+        attachButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        attachButton.setMaximumSize(new java.awt.Dimension(25, 25));
+        attachButton.setMinimumSize(new java.awt.Dimension(25, 25));
+        attachButton.setPreferredSize(new java.awt.Dimension(25, 25));
+        attachButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                attachButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                attachButtonMouseReleased(evt);
+            }
+        });
+        getContentPane().add(attachButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 398, -1, -1));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/ChatUI.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 550));
 
@@ -227,6 +247,37 @@ public class ChatUI extends javax.swing.JFrame {
         myMessage.setText("");
     }//GEN-LAST:event_myMessageMouseClicked
 
+    private void attachButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attachButtonMousePressed
+        ImageIcon attachImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_attachment_pressed.png"));
+        attachButton.setIcon(attachImage);
+    }//GEN-LAST:event_attachButtonMousePressed
+
+    private void attachButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attachButtonMouseReleased
+        ImageIcon attachImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_attachment_default.png"));
+        attachButton.setIcon(attachImage);
+        
+        //================================================================================================================
+        
+        FileNameExtensionFilter filter1 = new FileNameExtensionFilter("Image","jpg","png");
+        FileNameExtensionFilter filter2 = new FileNameExtensionFilter("Document","doc","docx","xls","xlsx");
+        FileNameExtensionFilter filter3 = new FileNameExtensionFilter("PDF","pdf");
+        FileNameExtensionFilter filter4 = new FileNameExtensionFilter("Text Files","txt");
+        
+        JFileChooser chooser = new JFileChooser();
+        
+        chooser.addChoosableFileFilter(filter1);
+        chooser.addChoosableFileFilter(filter2);
+        chooser.addChoosableFileFilter(filter3);
+        chooser.addChoosableFileFilter(filter4);
+        
+        int returnVal = chooser.showOpenDialog(null);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION ){
+            File myFile = chooser.getSelectedFile();
+            String text = myFile + "";
+        }
+    }//GEN-LAST:event_attachButtonMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -263,6 +314,7 @@ public class ChatUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel attachButton;
     private javax.swing.JLabel avatar;
     private javax.swing.JLabel background;
     private javax.swing.JLabel closeButton;
