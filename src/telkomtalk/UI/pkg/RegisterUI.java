@@ -175,9 +175,6 @@ public class RegisterUI extends javax.swing.JFrame {
 
         uploadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_upload_default.png"))); // NOI18N
         uploadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        uploadButton.setMaximumSize(new java.awt.Dimension(109, 25));
-        uploadButton.setMinimumSize(new java.awt.Dimension(109, 25));
-        uploadButton.setPreferredSize(new java.awt.Dimension(109, 25));
         uploadButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 uploadButtonMousePressed(evt);
