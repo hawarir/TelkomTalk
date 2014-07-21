@@ -171,6 +171,24 @@ public class Server implements Runnable {
         else if(msg.type.equals("logout")) {
             remove(ID);
         }
+        else if(msg.type.equals("register")) {
+            if(db.checkUsername(msg.sender)) {
+                String username = msg.sender;
+                String content[] = msg.content.split("@");
+                String name = content[0];
+                String password = content[1];
+                
+                if(db.register(username, name, password)) {
+                    clients[findClient(ID)].send(new Message("register", "SERVER", "TRUE", msg.sender));
+                }
+                else {
+                    clients[findClient(ID)].send(new Message("register", "SERVER", "Failed to register", ""));
+                }
+            }
+            else {
+                clients[findClient(ID)].send(new Message("register", "SERVER", "Username already exists", ""));
+            }
+        }
         else if(msg.type.equals("message")) {
             if(msg.recipient.equals("All")) {
                 announce("message", msg.sender, msg.content);
@@ -183,20 +201,14 @@ public class Server implements Runnable {
         else if(msg.type.equals("contacts")) {
             sendUserList(msg.sender);
         }
-        else if(msg.type.equals("addbuddy")) {
-            short result = db.addBuddy(msg);
+        else if(msg.type.equals("addcontact")) {
+            short result = db.addContact(msg);
             if(result == 0) {
-                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "TRUE", msg.sender));
-                findUserThread(msg.content).send(new Message("addbuddy", msg.sender, "TRUE", msg.content));
+                clients[findClient(ID)].send(new Message("addcontact", "SERVER", "TRUE", msg.sender));
+                findUserThread(msg.content).send(new Message("addcontact", msg.sender, "TRUE", msg.content));
             }
-            else if(result == 1) {
-                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "You're already friends with " + msg.content, msg.sender));
-            }
-            else if(result == -2) {
-                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Can't find " + msg.content, msg.sender));
-            }
-            else if(result == -1) {
-                clients[findClient(ID)].send(new Message("addbuddy", "SERVER", "Server Error", msg.sender));
+            else {
+                clients[findClient(ID)].send(new Message("addcontact", "SERVER", "Error Code:" + result, msg.sender));
             }
         }
     }

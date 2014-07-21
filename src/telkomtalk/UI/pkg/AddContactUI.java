@@ -8,6 +8,7 @@ package telkomtalk.UI.pkg;
 
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import telkomtalk.client.Client;
 
 /**
  *
@@ -15,11 +16,16 @@ import javax.swing.ImageIcon;
  */
 public class AddContactUI extends javax.swing.JFrame {
     Point point = new Point();
+    Client client = null;
     /**
      * Creates new form AddContactUI
      */
     public AddContactUI() {
         initComponents();
+    }
+    
+    public void setClient(Client _client) {
+        this.client = _client;
     }
 
     /**
@@ -200,6 +206,8 @@ public class AddContactUI extends javax.swing.JFrame {
     private void addContactButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseReleased
         ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"));
         addContactButton.setIcon(addContactImage);
+        
+        client.addContacts(username.getText());
     }//GEN-LAST:event_addContactButtonMouseReleased
 
     /**

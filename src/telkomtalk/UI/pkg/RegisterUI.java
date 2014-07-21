@@ -9,9 +9,11 @@ package telkomtalk.UI.pkg;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.regex.*;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import telkomtalk.client.Client;
 
 /**
  *
@@ -19,11 +21,63 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class RegisterUI extends javax.swing.JFrame {
     Point point = new Point();
+    Client client = null;
     /**
      * Creates new form RegisterUI
      */
     public RegisterUI() {
         initComponents();
+    }
+    
+    public void setClient(Client _client) {
+        this.client = _client;
+    }
+    
+    public boolean validateFields(String username, String name, String password) {
+        System.out.println(username + " " + name + " " + password);
+        
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]{4,18}$");
+        Matcher userMatcher = pattern.matcher(username);
+        Matcher passMatcher = pattern.matcher(password);
+        
+        Pattern patternName = Pattern.compile("[a-zA-Z\\s']+");
+        Matcher nameMatcher = patternName.matcher(name);
+        
+        if(userMatcher.matches() && nameMatcher.matches() && passMatcher.matches()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public void register() {
+        String username = usernameField.getText();
+        String name = nameField.getText();
+        String password = new String(passField.getPassword());
+        String reType = new String(retypeField.getPassword());
+        
+        if(password.equals(reType)) {
+            boolean isValid = validateFields(username, name, password);
+            if(isValid) {
+                if(client.register(username, name, password)) {
+                    this.hide();
+                }
+            }
+            else {
+                System.out.println("Input tidak valid");
+            }
+            usernameField.setText("");
+            nameField.setText("");
+            passField.setText("");
+            retypeField.setText("");
+            usernameField.requestFocus();
+        }
+        else {
+            passField.setText("");
+            retypeField.setText("");
+            passField.requestFocus();
+        }
     }
 
     /**
@@ -40,7 +94,7 @@ public class RegisterUI extends javax.swing.JFrame {
         registerButton2 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
-        emailField = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
         retypeField = new javax.swing.JPasswordField();
         avatar = new javax.swing.JLabel();
@@ -143,16 +197,16 @@ public class RegisterUI extends javax.swing.JFrame {
         usernameField.setPreferredSize(new java.awt.Dimension(20, 240));
         getContentPane().add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 135, 230, 25));
 
-        emailField.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        emailField.setBorder(null);
-        emailField.setMinimumSize(new java.awt.Dimension(20, 240));
-        emailField.setPreferredSize(new java.awt.Dimension(20, 240));
-        emailField.addActionListener(new java.awt.event.ActionListener() {
+        nameField.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        nameField.setBorder(null);
+        nameField.setMinimumSize(new java.awt.Dimension(20, 240));
+        nameField.setPreferredSize(new java.awt.Dimension(20, 240));
+        nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
+                nameFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 220, 230, 25));
+        getContentPane().add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 220, 230, 25));
 
         passField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         passField.setBorder(null);
@@ -264,6 +318,8 @@ public class RegisterUI extends javax.swing.JFrame {
     private void registerButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButton2MouseReleased
         ImageIcon registerImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_register_default_2.png"));
         registerButton2.setIcon(registerImage);
+        
+        register();
     }//GEN-LAST:event_registerButton2MouseReleased
 
     private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
@@ -288,9 +344,9 @@ public class RegisterUI extends javax.swing.JFrame {
         hide();
     }//GEN-LAST:event_cancelButtonMouseReleased
 
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
         
-    }//GEN-LAST:event_emailFieldActionPerformed
+    }//GEN-LAST:event_nameFieldActionPerformed
 
     private void uploadButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadButtonMousePressed
         ImageIcon uploadImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_upload_pressed.png"));
@@ -357,8 +413,8 @@ public class RegisterUI extends javax.swing.JFrame {
     private javax.swing.JLabel bakcground;
     private javax.swing.JLabel cancelButton;
     private javax.swing.JLabel closeButton;
-    private javax.swing.JTextField emailField;
     private javax.swing.JLabel minimizeButton;
+    private javax.swing.JTextField nameField;
     private javax.swing.JPasswordField passField;
     private javax.swing.JLabel registerButton2;
     private javax.swing.JPasswordField retypeField;

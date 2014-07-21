@@ -31,9 +31,8 @@ public class Client implements Runnable {
     public LoginUI loginUI = null;
     public MaintUI mainUI = null;
     
-    public Client(LoginUI ui) {
+    public Client() {
         try {
-            loginUI = ui;
             serverAddress = "localhost";
             port = 5000;
             socket = new Socket(InetAddress.getByName(serverAddress), port);
@@ -46,6 +45,10 @@ public class Client implements Runnable {
             System.out.println("Failed to start client");
             ex.printStackTrace();
         }
+    }
+    
+    public void setLoginUI(LoginUI ui) {
+        loginUI = ui;
     }
     
     public void setMainUI(MaintUI ui) {
@@ -93,14 +96,6 @@ public class Client implements Runnable {
                     mainUI.getmessage(msg);
                     System.out.println(msg.sender + ": " + msg.content);
                 }
-                else if(msg.type.equals("addbuddy")) {
-                    if(msg.content.equals("TRUE")) {
-                        System.out.println("Success!");
-                    }
-                    else {
-                        System.out.println(msg.content);
-                    }
-                }
                 else if(msg.type.equals("contacts")) {
                     String[] content = msg.content.split("@");
                     String contactUsername = content[0];
@@ -109,6 +104,25 @@ public class Client implements Runnable {
                     System.out.println(contactUsername + " " + contactName);
                     
                     mainUI.addContact(contactUsername, contactName);
+                }
+                else if(msg.type.equals("addcontact")) {
+                    if(msg.content.equals("TRUE")) {
+                        System.out.println("Add Contact Successful");
+                    }
+                    else {
+                        String content[] = msg.content.split(":");
+                        String code = content[1];
+                        
+                        if(code.equals("-1")) {
+                            System.out.println("You already have that person in your contact");
+                        }
+                        else if(code.equals("-2")) {
+                            System.out.println("Couldn't find contact in user list");
+                        }
+                        else if(code.equals("-3")) {
+                            System.out.println("Server Error");
+                        }
+                    }
                 }
             }
             catch(Exception ex) {
@@ -134,6 +148,33 @@ public class Client implements Runnable {
         catch(Exception ex) {
             System.out.println("Failed to login: " + ex.getMessage());
             return false;
+        }
+    }
+    
+    public boolean register(String username, String name, String password) {
+        try {
+            password = encryptPassword(password);
+            send(new Message("register", username, name + "@" + password, "SERVER"));
+            Message msg = (Message) in.readObject();
+            if(msg.content.equals("TRUE")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(Exception ex) {
+            System.out.println("Failed to register: " + ex.getMessage());
+            return false;
+        }
+    }
+    
+    public void addContacts(String contact) {
+        try {
+            send(new Message("addcontact", username, contact, "SERVER"));
+        }
+        catch(Exception ex) {
+            System.out.println("Failed to add contact: " + ex.getMessage());
         }
     }
     

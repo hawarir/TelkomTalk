@@ -23,6 +23,7 @@ public class LoginUI extends javax.swing.JFrame {
      */
     public LoginUI() {
         initComponents();
+        client = new Client();
     }
 
     /**
@@ -199,7 +200,7 @@ public class LoginUI extends javax.swing.JFrame {
         ImageIcon loginImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_login1.png"));
         loginButton.setIcon(loginImage);
         
-        client = new Client(this);
+        client.setLoginUI(this);
         String user = username.getText();
         String pass = new String(password.getPassword());
         if(client.login(user, client.encryptPassword(pass))) {
@@ -243,6 +244,7 @@ public class LoginUI extends javax.swing.JFrame {
         registerButton.setIcon(registerImage);
         
         RegisterUI register = new RegisterUI();
+        register.setClient(this.client);
         register.show();
     }//GEN-LAST:event_registerButtonMouseReleased
 
@@ -291,7 +293,7 @@ public class LoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
-        client = new Client(this);
+        client.setLoginUI(this);
         String user = username.getText();
         String pass = new String(password.getPassword());
         if(client.login(user, client.encryptPassword(pass))) {
@@ -311,7 +313,7 @@ public class LoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameActionPerformed
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        client = new Client(this);
+        client.setLoginUI(this);
         String user = username.getText();
         String pass = new String(password.getPassword());
         if(client.login(user, client.encryptPassword(pass))) {

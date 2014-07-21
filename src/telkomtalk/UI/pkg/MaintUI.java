@@ -336,6 +336,10 @@ public class MaintUI extends javax.swing.JFrame {
     private void addContactButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseReleased
         ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_default.png"));
         addContactButton.setIcon(addContactImage);
+        
+        AddContactUI contactUI = new AddContactUI();
+        contactUI.setClient(client);
+        contactUI.show();
     }//GEN-LAST:event_addContactButtonMouseReleased
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          

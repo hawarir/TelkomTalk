@@ -58,6 +58,18 @@ public class Database {
         }
     }
     
+    public boolean register(String username, String name, String password) {
+        try {
+            String query = new String("INSERT INTO user (username, password, name) VALUES ('" + username + "', '" + password + "', '" + name + "')");
+            st.executeUpdate(query);
+            return true;
+        }
+        catch(SQLException ex) {
+            System.out.println("Failed to register " + username + ": " + ex.getMessage());
+            return false;
+        }
+    }
+    
     public void storeMessage(Message msg) {
         try {
             String query = new String("INSERT INTO message (sender, content, recipient, time)"
@@ -69,7 +81,7 @@ public class Database {
         }
     }
     
-    public short addBuddy(Message msg) {
+    public short addContact(Message msg) {
         try {
             String query = new String("SELECT * FROM user WHERE username = '" + msg.content + "'");
             result = st.executeQuery(query);
@@ -86,7 +98,7 @@ public class Database {
                 }
                 else {
                     System.out.println(msg.sender + " already friends with " + msg.content);
-                    return 1;
+                    return -1;
                 }
             }
             else {
@@ -96,7 +108,7 @@ public class Database {
         }
         catch(SQLException ex) {
             System.out.println("Failed to add Buddy: " + ex.getMessage());
-            return -1;
+            return -3;
         }
     }
     
