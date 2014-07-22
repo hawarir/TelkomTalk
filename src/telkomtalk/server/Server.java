@@ -205,7 +205,6 @@ public class Server implements Runnable {
             short result = db.addContact(msg);
             if(result == 0) {
                 clients[findClient(ID)].send(new Message("addcontact", "SERVER", "TRUE", msg.sender));
-                findUserThread(msg.content).send(new Message("addcontact", msg.sender, "TRUE", msg.content));
             }
             else {
                 clients[findClient(ID)].send(new Message("addcontact", "SERVER", "Error Code:" + result, msg.sender));
