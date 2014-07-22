@@ -125,9 +125,11 @@ public class Client implements Runnable {
                     }
                 }
             }
-            catch(Exception ex) {
-                System.out.println("Failed to read message");
-                ex.printStackTrace();
+            catch(IOException ex) {
+                System.out.println("Failed to read message (IOException): " + ex.getMessage());
+            }
+            catch(ClassNotFoundException ex) {
+                System.out.println("Failed to read message (ClassNotFoundException): " + ex.getMessage());
             }
         }
     }
