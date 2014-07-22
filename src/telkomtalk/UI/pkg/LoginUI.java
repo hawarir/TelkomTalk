@@ -362,6 +362,14 @@ public class LoginUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try
+                {
+                    Thread.sleep(500);
+                }
+                catch(Exception e)
+                {
+                    
+                }
                 new LoginUI().setVisible(true);
             }
         });
