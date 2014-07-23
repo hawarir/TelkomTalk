@@ -124,6 +124,12 @@ public class Client implements Runnable {
                         }
                     }
                 }
+                else if(msg.type.equals("send_req")) {
+                    mainUI.getFile(msg);
+                }
+                else if(msg.type.equals("send_acc")) {
+                    mainUI.uploadFile(msg);
+                }
             }
             catch(IOException ex) {
                 System.out.println("Failed to read message (IOException): " + ex.getMessage());

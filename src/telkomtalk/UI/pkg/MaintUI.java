@@ -7,12 +7,15 @@
 package telkomtalk.UI.pkg;
 
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import telkomtalk.client.Client;
+import telkomtalk.client.*;
 import telkomtalk.server.Message;
 
 /**
@@ -24,6 +27,7 @@ public class MaintUI extends javax.swing.JFrame {
     Client client = null;
     DefaultTableModel model;
     ArrayList<ChatUI> activeChat = null;
+    String fileRecipient;
     /**
      * Creates new form ChatUI
      */
@@ -71,24 +75,63 @@ public class MaintUI extends javax.swing.JFrame {
             chatUI.show();
             chatUI.insertMessage(msg.content);
         }
-        
-        /*for(int i = 0; i < activeChat.size(); i++) {
-            if(activeChat.get(i).getPartner().equals(msg.sender)) {
-                activeChat.get(i).insertMessage(msg.content);
-                return;
-            }
+    }
+    
+    public void getFile(Message msg) {
+        if(findActive(msg.sender) == null) {
+            ChatUI chatUI = new ChatUI();
+            chatUI.setMainUI(this);
+            chatUI.setPartner(msg.sender);
+            addActive(chatUI);
+            chatUI.show();
         }
         
-        ChatUI chatUI = new ChatUI();
-        chatUI.setMainUI(this);
-        chatUI.setPartner(msg.sender);
-        addActive(chatUI);
-        chatUI.show();
-        chatUI.insertMessage(msg.content);*/
+        if(JOptionPane.showConfirmDialog(findActive(msg.sender), "Accept file: " + msg.content + " from " + msg.sender + "?") == 0) {
+            JFileChooser jf = new JFileChooser();
+            jf.setSelectedFile(new File(msg.content));
+            int returnVal = jf.showSaveDialog(findActive(msg.sender));
+            
+            String saveTo = jf.getSelectedFile().getPath();
+            if(saveTo != null && returnVal == JFileChooser.APPROVE_OPTION) {
+                Download dwn = new Download(saveTo, findActive(msg.sender));
+                Thread t = new Thread(dwn);
+                t.start();
+                sendFileReply(msg.sender, ("" + dwn.port));
+            }
+            else {
+                sendFileReply(msg.sender, "NO");
+            }
+        }
+        else {
+            sendFileReply(msg.sender, "NO");
+        }
+    }
+    
+    public void uploadFile(Message msg) {
+        if(!msg.content.equals("NO")) {
+            int port = Integer.parseInt(msg.content);
+            String addr = msg.sender;
+            
+            Upload upl = new Upload(addr, port, findActive(fileRecipient).myFile, findActive(fileRecipient));
+            Thread t = new Thread(upl);
+            t.start();
+        }
+        else {
+            findActive(fileRecipient).insertMessage(fileRecipient + " rejected upload request");
+        }
     }
     
     public void sendMessage(String recipient, String content) {
         client.send(new Message("message", client.username, content, recipient));
+    }
+    
+    public void sendFile(String recipient, String content) {
+        client.send(new Message("send_req", client.username, content, recipient));
+        fileRecipient = recipient;
+    }
+    
+    public void sendFileReply(String recipient, String content) {
+        client.send(new Message("send_acc", client.username, content, recipient));
     }
     
     /**

@@ -20,6 +20,7 @@ public class ChatUI extends javax.swing.JFrame {
     Point point = new Point();
     String partner = null;
     MaintUI mainUI = null;
+    File myFile;
     /**
      * Creates new form ChatUI
      */
@@ -270,11 +271,19 @@ public class ChatUI extends javax.swing.JFrame {
         chooser.addChoosableFileFilter(filter3);
         chooser.addChoosableFileFilter(filter4);
         
-        int returnVal = chooser.showOpenDialog(null);
+        int returnVal = chooser.showDialog(this, "Select File");
         
         if(returnVal == JFileChooser.APPROVE_OPTION ){
-            File myFile = chooser.getSelectedFile();
-            String text = myFile + "";
+            myFile = chooser.getSelectedFile();
+            if(myFile != null) {
+                long size = myFile.length();
+                if(size < 120 * 1024 * 1024) {
+                    mainUI.sendFile(partner, myFile.getName());
+                }
+                else {
+                    System.out.println("File size too large");
+                }
+            }
         }
     }//GEN-LAST:event_attachButtonMouseReleased
 
