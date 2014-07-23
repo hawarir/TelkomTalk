@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 X-COMMENT: Main-Class will be added automatically by build
 
-SplashScreen-Image: /telkomtalk/UI/images/TelkomTalk_Splash.gif
+SplashScreen-Image: /telkomtalk/UI/images/TelkomTalk_Splash2.png
 
