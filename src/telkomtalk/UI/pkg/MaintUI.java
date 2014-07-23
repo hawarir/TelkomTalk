@@ -115,6 +115,7 @@ public class MaintUI extends javax.swing.JFrame {
         retypePassword = new javax.swing.JPasswordField();
         SettingsTabBackground = new javax.swing.JLabel();
         cancelButton = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JLabel();
         closeButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -146,12 +147,17 @@ public class MaintUI extends javax.swing.JFrame {
         contactTab.setForeground(new java.awt.Color(255, 204, 204));
         contactTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        ScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        ScrollPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 83), 2));
+        ScrollPane.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+
+        contactTable.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         contactTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2"
+                "Username", "Name"
             }
         ) {
             Class[] types = new Class [] {
@@ -169,8 +175,13 @@ public class MaintUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        contactTable.setGridColor(new java.awt.Color(255, 255, 255));
+        contactTable.setRowHeight(40);
+        contactTable.setSelectionBackground(new java.awt.Color(225, 225, 255));
         contactTable.setShowHorizontalLines(false);
         contactTable.setShowVerticalLines(false);
+        contactTable.getTableHeader().setResizingAllowed(false);
+        contactTable.getTableHeader().setReorderingAllowed(false);
         contactTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 contactTableMouseClicked(evt);
@@ -205,7 +216,7 @@ public class MaintUI extends javax.swing.JFrame {
                 addContactButtonMouseReleased(evt);
             }
         });
-        settingsTab.add(addContactButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+        settingsTab.add(addContactButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         usernameField.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         usernameField.setBorder(null);
@@ -272,6 +283,27 @@ public class MaintUI extends javax.swing.JFrame {
             }
         });
         settingsTab.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, -1, -1));
+
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_default.png"))); // NOI18N
+        logoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutButton.setMaximumSize(new java.awt.Dimension(98, 35));
+        logoutButton.setMinimumSize(new java.awt.Dimension(98, 35));
+        logoutButton.setPreferredSize(new java.awt.Dimension(98, 35));
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logoutButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseReleased(evt);
+            }
+        });
+        settingsTab.add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
 
         chatTab.addTab("", new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/settings_tab.png")), settingsTab); // NOI18N
 
@@ -454,6 +486,26 @@ public class MaintUI extends javax.swing.JFrame {
         cancelButton.setIcon(cancelImage);
     }//GEN-LAST:event_cancelButtonMouseReleased
 
+    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
+        ImageIcon logoutImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_hover.png"));
+        logoutButton.setIcon(logoutImage);
+    }//GEN-LAST:event_logoutButtonMouseEntered
+
+    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
+        ImageIcon logoutImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_default.png"));
+        logoutButton.setIcon(logoutImage);
+    }//GEN-LAST:event_logoutButtonMouseExited
+
+    private void logoutButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMousePressed
+        ImageIcon logoutImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_pressed.png"));
+        logoutButton.setIcon(logoutImage);
+    }//GEN-LAST:event_logoutButtonMousePressed
+
+    private void logoutButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseReleased
+        ImageIcon logoutImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_default.png"));
+        logoutButton.setIcon(logoutImage);
+    }//GEN-LAST:event_logoutButtonMouseReleased
+
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
         contactTab.add(new javax.swing.JLabel("Avatar"));
         contactTab.add(new javax.swing.JLabel("Contact"));
@@ -507,6 +559,7 @@ public class MaintUI extends javax.swing.JFrame {
     private javax.swing.JLabel closeButton;
     private javax.swing.JPanel contactTab;
     private javax.swing.JTable contactTable;
+    private javax.swing.JLabel logoutButton;
     private javax.swing.JPanel messagesTab;
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JTextField nameField;

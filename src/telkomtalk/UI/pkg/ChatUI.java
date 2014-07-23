@@ -81,7 +81,7 @@ public class ChatUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         avatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        avatar.setText("Avatar");
+        avatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/avatar_default.png"))); // NOI18N
         avatar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(avatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 70, 70));
 
