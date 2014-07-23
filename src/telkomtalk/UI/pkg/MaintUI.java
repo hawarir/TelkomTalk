@@ -267,9 +267,6 @@ public class MaintUI extends javax.swing.JFrame {
 
         updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_update_default.png"))); // NOI18N
         updateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        updateButton.setMaximumSize(new java.awt.Dimension(150, 35));
-        updateButton.setMinimumSize(new java.awt.Dimension(150, 35));
-        updateButton.setPreferredSize(new java.awt.Dimension(150, 35));
         updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 updateButtonMouseEntered(evt);
@@ -303,9 +300,6 @@ public class MaintUI extends javax.swing.JFrame {
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_cancel_default.png"))); // NOI18N
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelButton.setMaximumSize(new java.awt.Dimension(110, 35));
-        cancelButton.setMinimumSize(new java.awt.Dimension(110, 35));
-        cancelButton.setPreferredSize(new java.awt.Dimension(110, 35));
         cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cancelButtonMouseEntered(evt);

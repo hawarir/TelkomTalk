@@ -158,11 +158,11 @@ public class RegisterUI extends javax.swing.JFrame {
         registerButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_register_default_2.png"))); // NOI18N
         registerButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         registerButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                registerButton2MouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerButton2MouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 registerButton2MousePressed(evt);
