@@ -210,6 +210,18 @@ public class Server implements Runnable {
                 clients[findClient(ID)].send(new Message("addcontact", "SERVER", "Error Code:" + result, msg.sender));
             }
         }
+        else if(msg.type.equals("send_req")) {
+            findUserThread(msg.recipient).send(new Message("send_req", msg.sender, msg.content, msg.recipient));
+        }
+        else if(msg.type.equals("send_acc")) {
+            if(!msg.content.equals("NO")) {
+                String IP = findUserThread(msg.sender).socket.getInetAddress().getHostAddress();
+                findUserThread(msg.recipient).send(new Message("send_acc", IP, msg.content, msg.recipient));
+            }
+            else {
+                findUserThread(msg.recipient).send(new Message("send_acc", msg.sender, msg.content, msg.recipient));
+            }
+        }
     }
     
     public void announce(String type, String sender, String content) {
