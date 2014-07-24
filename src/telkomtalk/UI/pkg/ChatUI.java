@@ -83,7 +83,6 @@ public class ChatUI extends javax.swing.JFrame {
 
         avatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         avatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/avatar_default.png"))); // NOI18N
-        avatar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(avatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 70, 70));
 
         closeButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -124,13 +123,15 @@ public class ChatUI extends javax.swing.JFrame {
         });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 3, 20, 20));
 
+        username.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 255, 255));
         username.setText("username");
-        username.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 140, 20));
 
-        status.setText("status");
-        status.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 140, -1));
+        status.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        status.setForeground(new java.awt.Color(255, 255, 255));
+        status.setText("-");
+        getContentPane().add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 140, 20));
 
         otherMessageScroll.setBorder(null);
 
@@ -147,6 +148,7 @@ public class ChatUI extends javax.swing.JFrame {
         myMessage.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         myMessage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         myMessage.setText("Type your message here");
+        myMessage.setBorder(null);
         myMessage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 myMessageMouseClicked(evt);
