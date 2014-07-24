@@ -30,6 +30,7 @@ public class Client implements Runnable {
     public Thread thread;
     public LoginUI loginUI = null;
     public MaintUI mainUI = null;
+    public RegisterUI registerUI = null;
     
     public Client() {
         try {
@@ -53,6 +54,10 @@ public class Client implements Runnable {
     
     public void setMainUI(MaintUI ui) {
         mainUI = ui;
+    }
+    
+    public void setRegisterUI(RegisterUI ui) {
+        registerUI = ui;
     }
     
     public String encryptPassword(String password) {
@@ -124,6 +129,14 @@ public class Client implements Runnable {
                         }
                     }
                 }
+                else if(msg.type.equals("update")) {
+                    if(msg.content.equals("TRUE")) {
+                        System.out.println("Update successful");
+                    }
+                    else {
+                        System.out.println("Update failed");
+                    }
+                }
                 else if(msg.type.equals("send_req")) {
                     mainUI.getFile(msg);
                 }
@@ -165,6 +178,7 @@ public class Client implements Runnable {
             send(new Message("register", username, name + "@" + password, "SERVER"));
             Message msg = (Message) in.readObject();
             if(msg.content.equals("TRUE")) {
+                
                 return true;
             }
             else {
@@ -173,6 +187,18 @@ public class Client implements Runnable {
         }
         catch(Exception ex) {
             System.out.println("Failed to register: " + ex.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean update(String name, String password) {
+        try {
+            password = encryptPassword(password);
+            send(new Message("update", this.username, name + "@" + password, "SERVER"));
+            return true;
+        }
+        catch(Exception ex) {
+            System.out.println("Failed to update: " + ex.getMessage());
             return false;
         }
     }

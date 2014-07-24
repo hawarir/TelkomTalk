@@ -3,22 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/MaintUI.java</file>
-            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/AddContactUI.java</file>
-            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/RegisterUI.java</file>
-            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/LoginUI.java</file>
-            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/ChatUI.java</file>
-
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/server/Server.java</file>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/client/Client.java</file>
-            <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/AddContactUI.java</file>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/ChatUI.java</file>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/server/Database.java</file>
-            <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/RegisterUI.java</file>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/MaintUI.java</file>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/LoginUI.java</file>
-
         </group>
     </open-files>
 </project-private>

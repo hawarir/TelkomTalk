@@ -12,6 +12,7 @@ import java.io.FileFilter;
 import java.util.regex.*;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import telkomtalk.client.Client;
 
@@ -78,6 +79,10 @@ public class RegisterUI extends javax.swing.JFrame {
             retypeField.setText("");
             passField.requestFocus();
         }
+    }
+    
+    public void popWarning(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 
     /**

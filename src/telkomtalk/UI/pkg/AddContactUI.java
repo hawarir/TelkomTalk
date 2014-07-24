@@ -17,6 +17,7 @@ import telkomtalk.client.Client;
 public class AddContactUI extends javax.swing.JFrame {
     Point point = new Point();
     Client client = null;
+    MaintUI mainUI = null;
     /**
      * Creates new form AddContactUI
      */
@@ -26,6 +27,10 @@ public class AddContactUI extends javax.swing.JFrame {
     
     public void setClient(Client _client) {
         this.client = _client;
+    }
+    
+    public void setMainUI(MaintUI ui) {
+        mainUI = ui;
     }
 
     /**
@@ -208,6 +213,7 @@ public class AddContactUI extends javax.swing.JFrame {
         addContactButton.setIcon(addContactImage);
         
         client.addContacts(username.getText());
+        mainUI.getContacts();
     }//GEN-LAST:event_addContactButtonMouseReleased
 
     /**

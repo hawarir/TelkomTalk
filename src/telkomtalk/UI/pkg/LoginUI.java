@@ -208,7 +208,7 @@ public class LoginUI extends javax.swing.JFrame {
             MaintUI chat = new MaintUI();
             chat.setClient(client);
             client.setMainUI(chat);
-            chat.show();
+            chat.setVisible(true);
             dispose();
         }
         else {
@@ -245,7 +245,7 @@ public class LoginUI extends javax.swing.JFrame {
         
         RegisterUI register = new RegisterUI();
         register.setClient(this.client);
-        register.show();
+        register.setVisible(true);
     }//GEN-LAST:event_registerButtonMouseReleased
 
     private void closeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeButtonMouseEntered
@@ -301,7 +301,7 @@ public class LoginUI extends javax.swing.JFrame {
             MaintUI chat = new MaintUI();
             chat.setClient(client);
             client.setMainUI(chat);
-            chat.show();
+            chat.setVisible(true);
             dispose();
         }
         else {
@@ -321,7 +321,7 @@ public class LoginUI extends javax.swing.JFrame {
             MaintUI chat = new MaintUI();
             chat.setClient(client);
             client.setMainUI(chat);
-            chat.show();
+            chat.setVisible(true);
             dispose();
         }
         else {

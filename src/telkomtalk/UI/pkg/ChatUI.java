@@ -212,7 +212,7 @@ public class ChatUI extends javax.swing.JFrame {
         closeButton.setIcon(closeImage);
 
 //        dispose();
-        hide();
+        setVisible(false);
     }//GEN-LAST:event_closeButtonMouseReleased
 
     private void minimizeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMousePressed

@@ -20,7 +20,7 @@ public class Database {
     
     public Database() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/telkom_talk", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/telkom_talk", "telkom", "telkom");
             st = conn.createStatement();
         }
         catch(SQLException ex) {
@@ -70,14 +70,57 @@ public class Database {
         }
     }
     
+    public boolean update(String username, String name, String password) {
+        try {
+            String query = new String("UPDATE user SET name = '" + name + "', password = '" + password + "' WHERE username = '" + username + "'");
+            st.executeUpdate(query);
+            return true;
+        }
+        catch(SQLException ex) {
+            System.out.println("Failed to update " + username + ": " + ex.getMessage());
+            return false;
+        }
+    }
+    
     public void storeMessage(Message msg) {
         try {
-            String query = new String("INSERT INTO message (sender, content, recipient, time)"
-                    + " VALUES ('" + msg.sender + "', '" + msg.content + "', '" + msg.recipient + "', now())");
+            String query = new String("INSERT INTO message (sender, content, recipient, time, seen)"
+                    + " VALUES ('" + msg.sender + "', '" + msg.content + "', '" + msg.recipient + "', now(), 1)");
             st.executeUpdate(query);
         }
         catch(SQLException ex) {
             System.out.println("Failed to store message: " + ex.getMessage());
+        }
+    }
+    
+    public void queueMessage(Message msg) {
+        try {
+            String query = new String("INSERT INTO message (sender, content, recipient, time, seen)"
+                    + " VALUES ('" + msg.sender + "', '" + msg.content + "', '" + msg.recipient + "', now(), 0)");
+            st.executeUpdate(query);
+        }
+        catch(SQLException ex) {
+            System.out.println("Failed to store message: " + ex.getMessage());
+        }
+    }
+    
+    public ArrayList<Message> getUnreadMessage(String username) {
+        try {
+            String query = new String("SELECT * FROM message WHERE recipient = '" + username + "' AND seen = 0");
+            result = st.executeQuery(query);
+            ArrayList<Message> message = new ArrayList<Message>();
+            while(result.next()) {
+                message.add(new Message("message", result.getString("sender"), result.getString("content"), result.getString("recipient")));
+            }
+            
+            query = new String("UPDATE message SET seen = 1 WHERE recipient = '" + username + "' AND seen = 0");
+            st.executeUpdate(query);
+            
+            return message;
+        }
+        catch(SQLException ex) {
+            System.out.println("Failed to retrieve message: " + ex.getMessage());
+            return null;
         }
     }
     

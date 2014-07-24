@@ -9,6 +9,9 @@ package telkomtalk.UI.pkg;
 import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.scene.control.PasswordField;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -38,12 +41,18 @@ public class MaintUI extends javax.swing.JFrame {
     
     public void setClient(Client _client) {
         this.client = _client;
-        client.getContacts();
+        getContacts();
     }
     
     public void addContact(String username, String name) {
         model = (DefaultTableModel) contactTable.getModel();
         model.addRow(new Object[]{username, name});
+    }
+    
+    public void getContacts() {
+        model = (DefaultTableModel) contactTable.getModel();
+        model.setRowCount(0);
+        client.getContacts();
     }
     
     public void addActive(ChatUI ui) {
@@ -65,6 +74,7 @@ public class MaintUI extends javax.swing.JFrame {
     
     public void getmessage(Message msg) {
         if(findActive(msg.sender) != null) {
+            findActive(msg.sender).setVisible(true);
             findActive(msg.sender).insertMessage(msg.content);
         }
         else {
@@ -72,7 +82,7 @@ public class MaintUI extends javax.swing.JFrame {
             chatUI.setMainUI(this);
             chatUI.setPartner(msg.sender);
             addActive(chatUI);
-            chatUI.show();
+            chatUI.setVisible(true);
             chatUI.insertMessage(msg.content);
         }
     }
@@ -83,7 +93,7 @@ public class MaintUI extends javax.swing.JFrame {
             chatUI.setMainUI(this);
             chatUI.setPartner(msg.sender);
             addActive(chatUI);
-            chatUI.show();
+            chatUI.setVisible(true);
         }
         
         if(JOptionPane.showConfirmDialog(findActive(msg.sender), "Accept file: " + msg.content + " from " + msg.sender + "?") == 0) {
@@ -125,6 +135,10 @@ public class MaintUI extends javax.swing.JFrame {
         client.send(new Message("message", client.username, content, recipient));
     }
     
+    public void requestMessage() {
+        client.send(new Message("unread", client.username, "", "SERVER"));
+    }
+    
     public void sendFile(String recipient, String content) {
         client.send(new Message("send_req", client.username, content, recipient));
         fileRecipient = recipient;
@@ -132,6 +146,50 @@ public class MaintUI extends javax.swing.JFrame {
     
     public void sendFileReply(String recipient, String content) {
         client.send(new Message("send_acc", client.username, content, recipient));
+    }
+    
+    public boolean validateFields(String name, String password) {        
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]{4,18}$");
+        Matcher passMatcher = pattern.matcher(password);
+        
+        Pattern patternName = Pattern.compile("[a-zA-Z\\s']+");
+        Matcher nameMatcher = patternName.matcher(name);
+        
+        if(nameMatcher.matches() && passMatcher.matches()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public void updateInfo() {
+        String newName = nameField.getText();
+        String newPassword = new String(password.getPassword());
+        String retype = new String(retypePassword.getPassword());
+         
+        if(newPassword.equals(retype)) {
+            client.update(newName, newPassword);
+            if(validateFields(newName, newPassword)) {
+                client.update(newName, newPassword);
+            }
+            else {
+                popWarning("Input tidak valid");
+            }
+            nameField.setText("");
+            password.setText("");
+            retypePassword.setText("");
+            nameField.requestFocus();
+        }
+        else {
+            password.setText("");
+            retypePassword.setText("");
+            password.requestFocus();
+        }
+    }
+    
+    public void popWarning(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
     
     /**
@@ -184,6 +242,11 @@ public class MaintUI extends javax.swing.JFrame {
         chatTab.setMinimumSize(new java.awt.Dimension(500, 580));
         chatTab.setName(""); // NOI18N
         chatTab.setPreferredSize(new java.awt.Dimension(500, 580));
+        chatTab.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                chatTabFocusGained(evt);
+            }
+        });
 
         contactTab.setBackground(new java.awt.Color(255, 255, 255));
         contactTab.setForeground(new java.awt.Color(255, 204, 204));
@@ -250,6 +313,8 @@ public class MaintUI extends javax.swing.JFrame {
         });
         settingsTab.add(addContactButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
 
+        usernameField.setEditable(false);
+        usernameField.setBackground(new java.awt.Color(255, 255, 255));
         usernameField.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         usernameField.setBorder(null);
         settingsTab.add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 162, 230, 25));
@@ -425,11 +490,16 @@ public class MaintUI extends javax.swing.JFrame {
         
         String partner = (String) contactTable.getValueAt(row, 0);
         
-        ChatUI chatUI = new ChatUI();
-        chatUI.setMainUI(this);
-        chatUI.setPartner(partner);
-        addActive(chatUI);
-        chatUI.show();
+        if(findActive(partner) != null) {
+            findActive(partner).setVisible(true);
+        }
+        else {
+            ChatUI chatUI = new ChatUI();
+            chatUI.setMainUI(this);
+            chatUI.setPartner(partner);
+            addActive(chatUI);
+            chatUI.setVisible(true);
+        }
     }                                             
 
 
@@ -454,7 +524,8 @@ public class MaintUI extends javax.swing.JFrame {
         
         AddContactUI contactUI = new AddContactUI();
         contactUI.setClient(client);
-        contactUI.show();
+        contactUI.setMainUI(this);
+        contactUI.setVisible(true);
     }//GEN-LAST:event_addContactButtonMouseReleased
 
     private void updateButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseEntered
@@ -475,6 +546,8 @@ public class MaintUI extends javax.swing.JFrame {
     private void updateButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseReleased
         ImageIcon updateImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_update_default.png"));
         updateButton.setIcon(updateImage);
+        
+        this.updateInfo();
     }//GEN-LAST:event_updateButtonMouseReleased
 
     private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
@@ -495,7 +568,15 @@ public class MaintUI extends javax.swing.JFrame {
     private void cancelButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseReleased
         ImageIcon cancelImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_cancel_default.png"));
         cancelButton.setIcon(cancelImage);
+        
+        nameField.setText("");
+        password.setText("");
+        retypePassword.setText("");
     }//GEN-LAST:event_cancelButtonMouseReleased
+
+    private void chatTabFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_chatTabFocusGained
+        requestMessage();
+    }//GEN-LAST:event_chatTabFocusGained
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
         contactTab.add(new javax.swing.JLabel("Avatar"));

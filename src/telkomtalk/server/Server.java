@@ -189,14 +189,29 @@ public class Server implements Runnable {
                 clients[findClient(ID)].send(new Message("register", "SERVER", "Username already exists", ""));
             }
         }
-        else if(msg.type.equals("message")) {
-            if(msg.recipient.equals("All")) {
-                announce("message", msg.sender, msg.content);
+        else if(msg.type.equals("update")) {
+            String content[] = msg.content.split("@");
+            String name = content[0];
+            String password = content[1];
+            
+            if(db.update(msg.sender, name, password)) {
+                clients[findClient(ID)].send(new Message("update", "SERVER", "TRUE", msg.sender));
             }
             else {
-                findUserThread(msg.recipient).send(msg);
+                clients[findClient(ID)].send(new Message("update", "SERVER", "FALSE", msg.sender));
             }
-            db.storeMessage(msg);
+        }
+        else if(msg.type.equals("message")) {
+            if(findUserThread(msg.recipient) != null) {
+                findUserThread(msg.recipient).send(msg);
+                db.storeMessage(msg);
+            }
+            else {
+                db.queueMessage(msg);
+            }
+        }
+        else if(msg.type.equals("unread")) {
+            sendUnreadMessage(msg.sender);
         }
         else if(msg.type.equals("contacts")) {
             sendUserList(msg.sender);
@@ -236,6 +251,13 @@ public class Server implements Runnable {
         for(int i = 0; i < contacts.size(); i++) {
             String content = contacts.get(i) + "@" + db.getName(contacts.get(i));
             findUserThread(username).send(new Message("contacts", "SERVER", content, username));
+        }
+    }
+    
+    public void sendUnreadMessage(String username) {
+        ArrayList<Message> unread = db.getUnreadMessage(username);
+        for(int i = 0; i < unread.size(); i++) {
+            findUserThread(username).send(unread.get(i));
         }
     }
     
