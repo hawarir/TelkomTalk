@@ -290,28 +290,21 @@ public class MaintUI extends javax.swing.JFrame {
         contactTable.setShowVerticalLines(false);
         contactTable.getTableHeader().setResizingAllowed(false);
         contactTable.getTableHeader().setReorderingAllowed(false);
-        contactTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                contactTableMouseClicked(evt);
-            }
-        });
         ScrollPane.setViewportView(contactTable);
 
         contactTab.add(ScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 430, 360));
 
         chatButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_chat_default.png"))); // NOI18N
         chatButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        chatButton.setMinimumSize(new java.awt.Dimension(138, 35));
-        chatButton.setPreferredSize(new java.awt.Dimension(138, 35));
         chatButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                chatButtonMouseEntered(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 chatButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 chatButtonMousePressed(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                chatButtonMouseEntered(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 chatButtonMouseReleased(evt);
@@ -686,11 +679,16 @@ public class MaintUI extends javax.swing.JFrame {
         
         String partner = (String) contactTable.getValueAt(row, 0);
         
-        ChatUI chatUI = new ChatUI();
-        chatUI.setMainUI(this);
-        chatUI.setPartner(partner);
-        addActive(chatUI);
-        chatUI.show();
+        if(findActive(partner) != null) {
+            findActive(partner).setVisible(true);
+        }
+        else {
+            ChatUI chatUI = new ChatUI();
+            chatUI.setMainUI(this);
+            chatUI.setPartner(partner);
+            addActive(chatUI);
+            chatUI.setVisible(true);
+        }
     }//GEN-LAST:event_chatButtonMouseReleased
 
     /**
