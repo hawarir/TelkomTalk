@@ -104,7 +104,7 @@ public class AddContactUI extends javax.swing.JFrame {
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 3, 20, 20));
 
         avatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        avatar.setText("avatar");
+        avatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/avatar_default2.png"))); // NOI18N
         avatar.setMaximumSize(new java.awt.Dimension(55, 55));
         avatar.setMinimumSize(new java.awt.Dimension(55, 55));
         avatar.setPreferredSize(new java.awt.Dimension(55, 55));
@@ -120,11 +120,11 @@ public class AddContactUI extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addContactButtonMouseEntered(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                addContactButtonMousePressed(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 addContactButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addContactButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 addContactButtonMouseReleased(evt);
