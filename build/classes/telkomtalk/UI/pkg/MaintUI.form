@@ -414,8 +414,8 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logoutButtonMouseExited"/>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logoutButtonMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logoutButtonMouseExited"/>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logoutButtonMousePressed"/>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logoutButtonMouseReleased"/>
               </Events>

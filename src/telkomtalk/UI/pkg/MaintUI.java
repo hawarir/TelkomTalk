@@ -30,6 +30,7 @@ public class MaintUI extends javax.swing.JFrame {
     DefaultTableModel model;
     ArrayList<ChatUI> activeChat = null;
     String fileRecipient;
+    String username;
     /**
      * Creates new form ChatUI
      */
@@ -40,6 +41,8 @@ public class MaintUI extends javax.swing.JFrame {
     
     public void setClient(Client _client) {
         this.client = _client;
+        username = client.username;
+        usernameField.setText(username);
         getContacts();
     }
     
@@ -414,11 +417,11 @@ public class MaintUI extends javax.swing.JFrame {
         logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_default.png"))); // NOI18N
         logoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                logoutButtonMouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 logoutButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 logoutButtonMousePressed(evt);
@@ -541,34 +544,6 @@ public class MaintUI extends javax.swing.JFrame {
         setExtendedState(getExtendedState()| LoginUI.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseReleased
 
-    private void contactTableMouseClicked(java.awt.event.MouseEvent evt) {                                          
-        /*
-        JTable target = (JTable) evt.getSource();
-        int row = target.getSelectedRow();
-        
-        String partner = (String) contactTable.getValueAt(row, 0);
-        
-<<<<<<< HEAD
-        if(findActive(partner) != null) {
-            findActive(partner).setVisible(true);
-        }
-        else {
-            ChatUI chatUI = new ChatUI();
-            chatUI.setMainUI(this);
-            chatUI.setPartner(partner);
-            addActive(chatUI);
-            chatUI.setVisible(true);
-        }
-=======
-        ChatUI chatUI = new ChatUI();
-        chatUI.setMainUI(this);
-        chatUI.setPartner(partner);
-        addActive(chatUI);
-        chatUI.show();
-        */
-    }                                             
-
-
     private void addContactButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContactButtonMouseEntered
         ImageIcon addContactImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_addcontact_hover.png"));
         addContactButton.setIcon(addContactImage);
@@ -662,6 +637,10 @@ public class MaintUI extends javax.swing.JFrame {
     private void logoutButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseReleased
         ImageIcon logoutImage = new ImageIcon(getClass().getResource("/telkomtalk/UI/images/button_logout_default.png"));
         logoutButton.setIcon(logoutImage);
+        
+        LoginUI newLogin = new LoginUI();
+        newLogin.setVisible(true);
+        dispose();
     }//GEN-LAST:event_logoutButtonMouseReleased
 
     private void chatButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chatButtonMouseEntered
