@@ -2,9 +2,24 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/MaintUI.java</file>
             <file>file:/C:/Users/Hawari%20Rahman/Documents/NetBeansProjects/TelkomTalk/src/telkomtalk/UI/pkg/LoginUI.java</file>
         </group>
+=======
+<<<<<<< HEAD
+        <group>
+            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/MaintUI.java</file>
+            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/RegisterUI.java</file>
+            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/server/Database.java</file>
+            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/LoginUI.java</file>
+            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/UI/pkg/ChatUI.java</file>
+            <file>file:/D:/Kuliah/KP/KP%20Telkom%20Jakarta/Project%20Telkom%20Talk/TelkomTalk(Github)/src/telkomtalk/client/Client.java</file>
+        </group>
+=======
+        <group/>
+>>>>>>> dc1234b861cdc9daa9c69901722bf632762913d7
+>>>>>>> f099826bac48c6fac382f351d23748295324bbe7
     </open-files>
 </project-private>

@@ -20,7 +20,7 @@ public class Database {
     
     public Database() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/telkom_talk", "telkom", "telkom");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/telkom_talk", "root", "root");
             st = conn.createStatement();
         }
         catch(SQLException ex) {
