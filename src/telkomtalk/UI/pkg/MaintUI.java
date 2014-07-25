@@ -220,6 +220,7 @@ public class MaintUI extends javax.swing.JFrame {
         logoutButton = new javax.swing.JLabel();
         closeButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -227,14 +228,14 @@ public class MaintUI extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(500, 700));
         setUndecorated(true);
         setResizable(false);
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
-            }
-        });
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
+            }
+        });
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -469,6 +470,15 @@ public class MaintUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 3, 20, 20));
+
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Username");
+        jLabel2.setMaximumSize(new java.awt.Dimension(250, 27));
+        jLabel2.setMinimumSize(new java.awt.Dimension(250, 27));
+        jLabel2.setPreferredSize(new java.awt.Dimension(250, 27));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 1, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telkomtalk/UI/images/MainUI.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 700));
@@ -732,6 +742,7 @@ public class MaintUI extends javax.swing.JFrame {
     private javax.swing.JPanel contactTab;
     private javax.swing.JTable contactTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel logoutButton;
     private javax.swing.JPanel messagesTab;
     private javax.swing.JLabel minimizeButton;
